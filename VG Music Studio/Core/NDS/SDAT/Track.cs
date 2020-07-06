@@ -50,7 +50,7 @@ namespace Kermalis.VGMusicStudio.Core.NDS.SDAT
         public int GetPitch()
         {
             int lfo = LFOType == LFOType.Pitch ? (LFORange * Utils.Sin(LFOPhase >> 8) * LFODepth) : 0;
-            lfo = (int)(((long)lfo >> 8);
+            lfo = (int)((long)lfo >> 8);
             return (PitchBend * PitchBendRange / 2) + lfo;
         }
         public int GetVolume()
@@ -62,7 +62,7 @@ namespace Kermalis.VGMusicStudio.Core.NDS.SDAT
         public sbyte GetPan()
         {
             int lfo = LFOType == LFOType.Panpot ? (LFORange * Utils.Sin(LFOPhase >> 8) * LFODepth) : 0;
-            lfo = (int)(((long)lfo >> 8);
+            lfo = (int)((long)lfo >> 8);
             int p = Panpot + lfo;
             if (p < -0x40)
             {
@@ -126,23 +126,23 @@ namespace Kermalis.VGMusicStudio.Core.NDS.SDAT
                     }
                 }
                 // LFO:
-                if (LFODelayCount > 0)
-                {
-                    LFODelayCount--;
-                    LFOPhase = 0;
-                }
-                else
-                {
-                    int speed = LFOSpeed << 6; // "<< 6" is "* 0x40"
-                    int counter = (LFOPhase + speed) >> 8; // ">> 8" is "/ 0x100"
-                    while (counter >= 0x8000)
-                    {
-                        counter -= 0x8000;
-                    }
-                    LFOPhase += (ushort)speed;
-                    LFOPhase &= 0xFF;
-                    LFOPhase |= (ushort)(counter << 8); // "<< 8" is "* 0x100"
-                }
+                //if (LFODelayCount > 0)
+                //{
+                //    LFODelayCount--;
+                //    LFOPhase = 0;
+                //}
+                //else
+                //{
+                //    int speed = LFOSpeed << 6; // "<< 6" is "* 0x40"
+                //    int counter = (LFOPhase + speed) >> 8; // ">> 8" is "/ 0x100"
+                //    while (counter >= 0x8000)
+                //    {
+                //        counter -= 0x8000;
+                //    }
+                //    LFOPhase += (ushort)speed;
+                //    LFOPhase &= 0xFF;
+                //    LFOPhase |= (ushort)(counter << 8); // "<< 8" is "* 0x100"
+                //}
             }
             else
             {

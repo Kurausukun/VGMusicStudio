@@ -90,6 +90,7 @@ namespace Kermalis.VGMusicStudio.Core.NDS.SDAT
                 if (chan.Owner != null)
                 {
                     chan.StepEnvelope();
+                    chan.UpdateLFO();
                     if (chan.NoteDuration == 0 && !chan.Owner.WaitingForNoteToFinishBeforeContinuingXD)
                     {
                         chan.State = EnvelopeState.Release;

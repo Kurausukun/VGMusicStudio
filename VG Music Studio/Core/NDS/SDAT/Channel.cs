@@ -166,6 +166,25 @@ namespace Kermalis.VGMusicStudio.Core.NDS.SDAT
                 }
             }
         }
+		
+        public void UpdateLFO()
+        {
+            if (Owner.LFODelayCount > 0)
+            {
+                Owner.LFODelayCount--;
+                Owner.LFOPhase = 0;
+            }
+            else
+            {
+                int speed = Owner.LFOSpeed << 6; // "<< 6" is "* 0x40"
+                int counter = (Owner.LFOPhase + speed);
+                while (counter >= 0x8000)
+                {
+                    counter -= 0x8000;
+                }
+                Owner.LFOPhase = (ushort)counter;
+            }
+        }
 
         /// <summary>EmulateProcess doesn't care about samples that loop; it only cares about ones that force the track to wait for them to end</summary>
         public void EmulateProcess()
