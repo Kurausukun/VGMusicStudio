@@ -50,19 +50,19 @@ namespace Kermalis.VGMusicStudio.Core.NDS.SDAT
         public int GetPitch()
         {
             int lfo = LFOType == LFOType.Pitch ? (LFORange * Utils.Sin(LFOPhase >> 8) * LFODepth) : 0;
-            lfo = (int)(((long)lfo * 60) >> 14);
+            lfo = (int)(((long)lfo >> 8);
             return (PitchBend * PitchBendRange / 2) + lfo;
         }
         public int GetVolume()
         {
             int lfo = LFOType == LFOType.Volume ? (LFORange * Utils.Sin(LFOPhase >> 8) * LFODepth) : 0;
-            lfo = (int)(((lfo & ~0xFC000000) >> 8) | ((lfo < 0 ? -1 : 0) << 6) | (((uint)lfo >> 26) << 18));
+            lfo = (int)(((long)lfo * 60) >> 14);
             return Utils.SustainTable[_player.Volume] + Utils.SustainTable[Volume] + Utils.SustainTable[Expression] + lfo;
         }
         public sbyte GetPan()
         {
             int lfo = LFOType == LFOType.Panpot ? (LFORange * Utils.Sin(LFOPhase >> 8) * LFODepth) : 0;
-            lfo = (int)(((lfo & ~0xFC000000) >> 8) | ((lfo < 0 ? -1 : 0) << 6) | (((uint)lfo >> 26) << 18));
+            lfo = (int)(((long)lfo >> 8);
             int p = Panpot + lfo;
             if (p < -0x40)
             {
@@ -135,9 +135,9 @@ namespace Kermalis.VGMusicStudio.Core.NDS.SDAT
                 {
                     int speed = LFOSpeed << 6; // "<< 6" is "* 0x40"
                     int counter = (LFOPhase + speed) >> 8; // ">> 8" is "/ 0x100"
-                    while (counter >= 0x80)
+                    while (counter >= 0x8000)
                     {
-                        counter -= 0x80;
+                        counter -= 0x8000;
                     }
                     LFOPhase += (ushort)speed;
                     LFOPhase &= 0xFF;
